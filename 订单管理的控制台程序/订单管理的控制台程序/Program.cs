@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO;
 
 namespace 订单管理的控制台程序
 {
@@ -19,11 +20,12 @@ namespace 订单管理的控制台程序
 				Console.WriteLine("1:删除订单。");
 				Console.WriteLine("2:添加订单。");
 				Console.WriteLine("3:修改订单。");
+				Console.WriteLine("4.将订单序列化与反序列化");
 				Console.Write("请选择你要做的操作：");
 			}
-			switch (Int32.Parse(Console.ReadLine()))
+			switch (Console.ReadLine())
 			{
-				case 0:
+				case "0":
 					{
 						Console.Clear();
 						Console.Write("请输入你要查看的订单的订单号：");
@@ -31,15 +33,21 @@ namespace 订单管理的控制台程序
 						orderService.ViewOrder(Ordernum);
 						break;
 					}
-				case 1:
+				case "1":
 					{
 						Console.Clear();
-						Console.Write("请输入你要删除的订单的订单号：");
-						int Ordernum = Int32.Parse(Console.ReadLine());
-						orderService.DelectOrder(Ordernum);
+						if (orderService.TotalOrder.Count == 0) { Console.WriteLine("你还没有订单可删欸。"); }
+						else
+						{
+							Console.Write("请输入你要删除的订单的订单号：");
+							int Ordernum = Int32.Parse(Console.ReadLine());
+							orderService.DelectOrder(Ordernum);
+							Ordernumber -= 1;
+						}
 						break;
 					}
-				case 2:
+				case "2":
+
 					{
 						Console.Clear();
 						List<Item> allItem = new List<Item>();
@@ -51,10 +59,20 @@ namespace 订单管理的控制台程序
 
 							Console.Write("请输入商品名：");
 							string Itemname = Console.ReadLine();
-							Console.Write("请输入商品数目：");
-							int Itemnum = Int32.Parse(Console.ReadLine());
+
+							int Itemnum = 0;
+							Console.Write("请输入商品数量：");
+							while (!Int32.TryParse(Console.ReadLine(), out Itemnum))
+							{
+								Console.WriteLine("请输入数字：");
+							}
+
 							Console.Write("请输入商品单价：");
-							Double Itemprice = Double.Parse(Console.ReadLine());
+							Double Itemprice = 0;
+							while (!Double.TryParse(Console.ReadLine(), out Itemprice))
+							{
+								Console.WriteLine("请输入数字：");
+							}
 
 							Item NewItem = new Item()
 							{
@@ -98,12 +116,11 @@ namespace 订单管理的控制台程序
 						}
 
 					}
-				case 3:
+				case "3":
 					{
 						Console.Clear();
 						Console.Write("请选择你要进行修改的订单的订单号：");
 						int OrderNumber = Int32.Parse(Console.ReadLine());
-						Console.WriteLine("以下是你要修改的订单详情：");
 						orderService.ViewOrder(OrderNumber);
 						Console.WriteLine("-------------------------------");
 						Console.WriteLine("以下是你可以进行的操作：");
@@ -116,6 +133,7 @@ namespace 订单管理的控制台程序
 							case 0:
 								{
 									Console.Clear();
+
 									Console.WriteLine("请输入新的用户名：");
 									orderService.FindOrder(OrderNumber).ChangeCustomer(Console.ReadLine());
 									break;
@@ -125,10 +143,20 @@ namespace 订单管理的控制台程序
 									List<Item> allItem = new List<Item>();
 									Console.Write("请输入商品名：");
 									string Itemname = Console.ReadLine();
-									Console.Write("请输入商品数目：");
-									int Itemnum = Int32.Parse(Console.ReadLine());
+
+									int Itemnum = 0;
+									Console.WriteLine("请输入商品数量：");
+									while (!Int32.TryParse(Console.ReadLine(), out Itemnum))
+									{
+										Console.WriteLine("请输入数字：");
+									}
+
 									Console.Write("请输入商品单价：");
-									Double Itemprice = Double.Parse(Console.ReadLine());
+									Double Itemprice = 0;
+									while (!Double.TryParse(Console.ReadLine(), out Itemprice))
+									{
+										Console.WriteLine("请输入数字：");
+									}
 
 									Item NewItem = new Item()
 									{
@@ -136,7 +164,7 @@ namespace 订单管理的控制台程序
 										ItemNum = Itemnum,
 										Perprice = Itemprice
 									};
-									orderService.FindOrder(OrderNumber).Item.Add(NewItem);
+									orderService.FindOrder(OrderNumber).addItem(NewItem);
 									break;
 
 								}
@@ -150,6 +178,41 @@ namespace 订单管理的控制台程序
 						}
 						break;
 					}
+				case "4":
+					{
+						Console.Clear();
+						Console.WriteLine("以下是可进行的操作：");
+						Console.WriteLine("1:将全部订单序列化");
+						Console.WriteLine("2：反序列化");
+					A1:
+						{
+							switch (Console.ReadLine())
+							{
+
+								case "1":
+									{
+										Console.Clear();
+										orderService.Export();
+										Console.WriteLine(File.ReadAllText("s.xml"));
+										break;
+									}
+								case "2":
+									{
+										Console.Clear();
+										orderService.Import();
+										break;
+									}
+								default:
+									{
+
+										Console.WriteLine("你输入了错误指令，请重新输入：");
+										goto A1;
+									}
+									break;
+							}
+						}
+					break;
+			}
 				default:
 					{
 						Console.Clear();

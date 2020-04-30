@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace 订单管理的控制台程序
 {
-	class Item
+	[Serializable]
+	public class Item
 	{
 		private string itemName;
 		private int itemNum;

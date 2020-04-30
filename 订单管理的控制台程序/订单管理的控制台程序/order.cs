@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace 订单管理的控制台程序
 {
-	class Order : List<Item>
+	[Serializable]
+	public class Order 
 	{
 		private int orderNumber;
 		private List<Item> item = new List<Item>();
@@ -33,29 +34,31 @@ namespace 订单管理的控制台程序
 		public void addItem(Item addedItem)
 		{
 			bool ItemInOrder=false;
-			if (item != null)
+			if (item == null) { item.Add(addedItem); }
+			else
 			{
 				foreach (Item Item in item)
 				{
-					if (Item.Equals(addedItem))
+					if (Item.ItemName == addedItem.ItemName&&Item.Perprice==addedItem.Perprice)
 					{
 						ItemInOrder = true;
 						break;
 					}
 				}
-			}
-			if (ItemInOrder == false)
-			{
-				item.Add(addedItem);
-			}
-			else 
-			{
-				Console.WriteLine("该商品在该订单中已经存在，现将仅修改数量。");
-				var a = from b in item
-						where b.ItemName == addedItem.ItemName
-						select b;
-				Item SameItem = a.First() as Item;
-				SameItem.ItemNum += addedItem.ItemNum;
+
+				if (ItemInOrder == false)
+				{
+					item.Add(addedItem);
+				}
+				else
+				{
+					Console.WriteLine("该商品在该订单中已经存在，现将仅修改数量。");
+					var a = from b in item
+							where b.ItemName == addedItem.ItemName
+							select b;
+					Item SameItem = a.First() as Item;
+					SameItem.ItemNum += addedItem.ItemNum;
+				}
 			}
 		}
 		public void delectItem(string ItemName)

@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace 订单管理的控制台程序
 {
-	class Customer
+	[Serializable]
+	public class Customer
 	{
 		private string customerName;
 		public string CustomerName
