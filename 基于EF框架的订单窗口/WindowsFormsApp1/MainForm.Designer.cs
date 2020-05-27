@@ -37,8 +37,6 @@
 			this.button2 = new System.Windows.Forms.Button();
 			this.button3 = new System.Windows.Forms.Button();
 			this.button4 = new System.Windows.Forms.Button();
-			this.button5 = new System.Windows.Forms.Button();
-			this.button6 = new System.Windows.Forms.Button();
 			this.ordersTableAdapter = new 结合EF框架的订单窗口.ordersDataSetTableAdapters.ordersTableAdapter();
 			this.panel1 = new System.Windows.Forms.Panel();
 			this.dataGridView1 = new System.Windows.Forms.DataGridView();
@@ -114,8 +112,6 @@
 			this.flowLayoutPanel2.Controls.Add(this.button2);
 			this.flowLayoutPanel2.Controls.Add(this.button3);
 			this.flowLayoutPanel2.Controls.Add(this.button4);
-			this.flowLayoutPanel2.Controls.Add(this.button5);
-			this.flowLayoutPanel2.Controls.Add(this.button6);
 			this.flowLayoutPanel2.Location = new System.Drawing.Point(0, 59);
 			this.flowLayoutPanel2.Name = "flowLayoutPanel2";
 			this.flowLayoutPanel2.Size = new System.Drawing.Size(800, 39);
@@ -150,24 +146,6 @@
 			this.button4.Text = "删除订单";
 			this.button4.UseVisualStyleBackColor = true;
 			this.button4.Click += new System.EventHandler(this.button4_Click);
-			// 
-			// button5
-			// 
-			this.button5.Location = new System.Drawing.Point(302, 3);
-			this.button5.Name = "button5";
-			this.button5.Size = new System.Drawing.Size(91, 36);
-			this.button5.TabIndex = 3;
-			this.button5.Text = "导入订单";
-			this.button5.UseVisualStyleBackColor = true;
-			// 
-			// button6
-			// 
-			this.button6.Location = new System.Drawing.Point(399, 3);
-			this.button6.Name = "button6";
-			this.button6.Size = new System.Drawing.Size(93, 36);
-			this.button6.TabIndex = 4;
-			this.button6.Text = "导出订单";
-			this.button6.UseVisualStyleBackColor = true;
 			// 
 			// ordersTableAdapter
 			// 
@@ -321,8 +299,6 @@
 		private System.Windows.Forms.Button button2;
 		private System.Windows.Forms.Button button3;
 		private System.Windows.Forms.Button button4;
-		private System.Windows.Forms.Button button5;
-		private System.Windows.Forms.Button button6;
 		private ordersDataSetTableAdapters.ordersTableAdapter ordersTableAdapter;
 		private System.Windows.Forms.BindingSource orderBindingSource;
 		private System.Windows.Forms.BindingSource itemBindingSource;

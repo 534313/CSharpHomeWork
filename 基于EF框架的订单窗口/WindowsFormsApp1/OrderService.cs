@@ -41,12 +41,12 @@ namespace 结合EF框架的订单窗口
 					var order = db.orders.Include("Items").Where(o => o.OrderId == id).FirstOrDefault();
 					RemoveItems(id);
 					db.orders.Remove(order);
-					db.SaveChanges();
-				}
+					RemoveCustomer(Customerid);
+			}
 			
 			
 		}
-		private static void RemoveItems(string orderId)
+		public static void RemoveItems(string orderId)
 		{
 			using (var db = new OrderContext())
 			{
@@ -59,9 +59,9 @@ namespace 结合EF框架的订单窗口
 		{
 			using (var db = new OrderContext())
 			{
-				var oldCustomer = db.customers.Where(customer => customer.CustomerId == id);
-				db.customers.RemoveRange(oldCustomer);
-		
+				var oldCustomer = db.customers.Where(customer => customer.CustomerId == id).FirstOrDefault();
+				db.customers.Remove(oldCustomer);
+				db.SaveChanges();
 			}
 		}
 		public static void UpdateOrder(Order newOrder)

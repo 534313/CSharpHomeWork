@@ -49,12 +49,11 @@ namespace 结合EF框架的订单窗口
 			Item item1 = thisOrder.Items.Where(o => o.ItemName == item.ItemName).First();
 			using (var context = new OrderContext())
 			{
-				var order = context.orders.Where(o => o.OrderId == thisOrder.OrderId).FirstOrDefault();
-				Item item2 = order.Items.Where(o => o.ItemName == item1.ItemName).FirstOrDefault();
-				order.Items.Remove(item2);
+				var a = context.items.Where(o => o.ItemName == item.ItemName).FirstOrDefault();
+				context.items.Remove(a);
 				context.SaveChanges();
 			}
-			UpdataData();
+				UpdataData();
 		}
 
 		private void button3_Click(object sender, EventArgs e)
